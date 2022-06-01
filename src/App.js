@@ -1,14 +1,52 @@
-import './App.css';
-import "antd/dist/antd.css";
-import { Form, Input, Button } from 'antd';
-import { useState } from 'react';
+import './App.css'
+import "antd/dist/antd.css"
+import { Form, Input, Button } from 'antd'
+import { useState, useEffect } from 'react'
+import { connect, keyStores, Contract } from 'near-api-js'
+import { ACCOUNT_ID } from './config.json'
 
 function App() {
+  const [account, setAccount] = useState({})
+  const [contract, setContract]  = useState({})
   const [message, setMessage] = useState('')
 
-  const onSubmit = (value) => {
+  const getAccount = async () => {
+    const config = {
+      networkId: "testnet",
+      keyStore: new keyStores.BrowserLocalStorageKeyStore(),
+      nodeUrl: "https://rpc.testnet.near.org",
+      walletUrl: "https://wallet.testnet.near.org",
+      helperUrl: "https://helper.testnet.near.org",
+      explorerUrl: "https://explorer.testnet.near.org",
+    }
+
+    const near = await connect(config)
+    const acc = await near.account("bluxue2.testnet")
+    setAccount(acc)
+  }
+
+  useEffect(() => {getAccount()}, [])
+
+  useEffect(() => {
+    const methodOptions = {
+      viewMethods: ['get_message'],
+      changeMethods: ['set_name']
+    }
+
+    setContract(new Contract(
+      account,
+      'bluxue2.testnet',
+      methodOptions
+    ))
+  }, [account])
+
+
+  const onSubmit = async (value) => {
     console.log(value)
     setMessage(value?.name)
+
+    const response = await contract.get_message()
+    console.log(response)
   }
 
   return (
