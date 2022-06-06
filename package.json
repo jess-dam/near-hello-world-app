@@ -1,7 +1,7 @@
 {
   "name": "hello-world-near-client",
   "version": "0.1.0",
-  "homepage": "https://jess-dam.github.io/near-hello-world-smart-contract",
+  "homepage": "https://jess-dam.github.io/near-hello-world-app",
   "private": true,
   "dependencies": {
     "@headlessui/react": "^1.6.4",
@@ -11,6 +11,7 @@
     "antd": "^4.20.7",
     "buffer": "^6.0.3",
     "cra-template": "1.2.0",
+    "env-cmd": "^10.1.0",
     "near-api-js": "^0.44.2",
     "react": "^18.1.0",
     "react-dom": "^18.1.0",
@@ -18,10 +19,11 @@
     "web-vitals": "^2.1.4"
   },
   "scripts": {
-    "predeploy": "npm run build",
+    "predeploy": "env-cmd -f .env.production react-scripts build",
     "deploy": "gh-pages -d build",
-    "start": "react-scripts start",
-    "build": "react-scripts build",
+    "start": "env-cmd -f .env.staging react-scripts start",
+    "build:staging": "env-cmd -f .env.staging react-scripts build",
+    "build:production": "env-cmd -f .env.production react-scripts build",
     "test": "react-scripts test",
     "eject": "react-scripts eject"
   },

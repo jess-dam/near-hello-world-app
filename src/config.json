@@ -1,3 +1,4 @@
 {
-    "ACCOUNT_ID": "bluxue2.testnet"
+    "CONTRACT_PATH": "bluxue2.testnet",
+    "DOMAIN": "testnet"
 }
