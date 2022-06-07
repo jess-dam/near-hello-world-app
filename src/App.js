@@ -5,7 +5,11 @@ import { useState, useEffect } from 'react'
 import { connect, keyStores, Contract, WalletConnection } from 'near-api-js'
 import config from './config.json'
 
+
 function App() {
+  const CALLBACK_URL = process.env.NODE_ENV === 'development' ? process.env.REACT_APP_DEV_CALLBACK_URL : process.env.REACT_APP_PROD_CALLBACK_URL
+  console.log(`Callback url env: ${CALLBACK_URL}`)
+
   const keyStore = new keyStores.BrowserLocalStorageKeyStore()
   const [wallet, setWallet] = useState({})
   const [contract, setContract]  = useState({})
@@ -55,14 +59,12 @@ function App() {
     await wallet.requestSignIn(
       config.CONTRACT_PATH,
       "Hello World App",
-      process.env.CALLBACK_URL,
-      process.env.CALLBACK_URL
+      CALLBACK_URL,
+      CALLBACK_URL
     );
   };
 
   const getContract = () => {
-    console.log(wallet)
-
     const methodOptions = {
       viewMethods: ['get_message'],
       changeMethods: ['set_name'],
