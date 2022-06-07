@@ -1,15 +1,15 @@
 {
   "files": {
     "main.css": "/near-hello-world-app/static/css/main.a87352b6.css",
-    "main.js": "/near-hello-world-app/static/js/main.9c789e41.js",
+    "main.js": "/near-hello-world-app/static/js/main.ba613bf5.js",
     "static/js/787.6a494afa.chunk.js": "/near-hello-world-app/static/js/787.6a494afa.chunk.js",
     "index.html": "/near-hello-world-app/index.html",
     "main.a87352b6.css.map": "/near-hello-world-app/static/css/main.a87352b6.css.map",
-    "main.9c789e41.js.map": "/near-hello-world-app/static/js/main.9c789e41.js.map",
+    "main.ba613bf5.js.map": "/near-hello-world-app/static/js/main.ba613bf5.js.map",
     "787.6a494afa.chunk.js.map": "/near-hello-world-app/static/js/787.6a494afa.chunk.js.map"
   },
   "entrypoints": [
     "static/css/main.a87352b6.css",
-    "static/js/main.9c789e41.js"
+    "static/js/main.ba613bf5.js"
   ]
 }
