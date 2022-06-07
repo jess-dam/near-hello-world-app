@@ -8,7 +8,6 @@ import config from './config.json'
 
 function App() {
   const CALLBACK_URL = process.env.NODE_ENV === 'development' ? process.env.REACT_APP_DEV_CALLBACK_URL : process.env.REACT_APP_PROD_CALLBACK_URL
-  console.log(`Callback url env: ${CALLBACK_URL}`)
 
   const keyStore = new keyStores.BrowserLocalStorageKeyStore()
   const [wallet, setWallet] = useState({})
@@ -51,6 +50,8 @@ function App() {
     // redirects user to wallet to authorize your dApp
     // this creates an access key that will be stored in the browser's local storage
     // access key can then be used to connect to NEAR and sign transactions via keyStore
+    console.log(`hasValidKey? : ${hasValidKey()}`)
+
     if (!hasValidKey())
       signIn(walletConnection)
   }
@@ -80,7 +81,6 @@ function App() {
 
   const onSubmit = async (value) => {
     setIsLoading(true)
-    console.log(contract)
     await contract.set_name({ name: value?.name })
     const response = await contract.get_message()
     console.log(response)
