@@ -8,6 +8,8 @@ import config from './config.json'
 
 function App() {
   const CALLBACK_URL = process.env.NODE_ENV === 'development' ? process.env.REACT_APP_DEV_CALLBACK_URL : process.env.REACT_APP_PROD_CALLBACK_URL
+  const DEV_NEAR_KEY_LABEL = /near-api-js:keystore:.*\.testnet:testnet/
+  const PROD_NEAR_KEY_LABEL = /nearlib:keystore:.*\.testnet:default/
 
   const keyStore = new keyStores.BrowserLocalStorageKeyStore()
   const [wallet, setWallet] = useState({})
@@ -15,14 +17,9 @@ function App() {
   const [message, setMessage] = useState('')
   const [isLoading, setIsLoading] = useState(false)
 
-  const hasValidKey = (keys) => {
-    if (keys === null || keys?.length === 0) {
-      console.log("No signing keys found in local storage!")
-      return false
-    }
-
-    for ( var i = 0, len = localStorage.length; i < len; ++i ) {
-      if (localStorage.key(i).includes(`near-api-js:keystore:${config.CONTRACT_PATH}:testnet`)
+  const hasValidKey = () => {
+    for (let i = 0; i < localStorage.length; ++i ) {
+      if ((localStorage.key(i).match(DEV_NEAR_KEY_LABEL) || localStorage.key(i).match(PROD_NEAR_KEY_LABEL))
         && localStorage.getItem(localStorage.key(i))) {
         return true
       }
@@ -50,8 +47,6 @@ function App() {
     // redirects user to wallet to authorize your dApp
     // this creates an access key that will be stored in the browser's local storage
     // access key can then be used to connect to NEAR and sign transactions via keyStore
-    console.log(`hasValidKey? : ${hasValidKey()}`)
-
     if (!hasValidKey())
       signIn(walletConnection)
   }
@@ -83,7 +78,6 @@ function App() {
     setIsLoading(true)
     await contract.set_name({ name: value?.name })
     const response = await contract.get_message()
-    console.log(response)
     setMessage(response)
     setIsLoading(false)
   }
